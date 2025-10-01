@@ -2,61 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>RideWithUs</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    h1 { color: darkblue; }
-    .container { margin-top: 20px; }
-    input, button { margin: 5px; padding: 8px; }
-    #result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
-    pre { background: #f4f4f4; padding: 10px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ride With Us 🚕</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>RideWithUs</h1>
-
   <div class="container">
-    <label for="pickup">Pickup:</label>
-    <input type="text" id="pickup" placeholder="Enter pickup (A, B, C...)">
+    <h1>🚕 Ride With Us</h1>
+    <p>Enter your pickup and destination to book a ride.</p>
 
-    <label for="destination">Destination:</label>
-    <input type="text" id="destination" placeholder="Enter destination (A, B, C...)">
+    <form id="rideForm">
+      <input type="text" id="pickup" placeholder="Enter pickup location" required>
+      <input type="text" id="destination" placeholder="Enter destination" required>
+      <button type="submit">Request Ride</button>
+    </form>
 
-    <button onclick="requestRide()">Request Ride</button>
+    <div id="result"></div>
   </div>
 
-  <div id="result"></div>
-
-  <script>
-    async function requestRide() {
-      const pickup = document.getElementById("pickup").value;
-      const destination = document.getElementById("destination").value;
-      const resultDiv = document.getElementById("result");
-
-      if (!pickup || !destination) {
-        resultDiv.innerHTML = "<p style='color:red;'>⚠️ Please enter both pickup and destination</p>";
-        return;
-      }
-
-      try {
-        const response = await fetch(`http://127.0.0.1:8000/ride?pickup=${pickup}&destination=${destination}`);
-        if (!response.ok) throw new Error("API request failed");
-
-        const data = await response.json();
-        resultDiv.innerHTML = `
-          <h3>✅ Ride Assigned</h3>
-          <p><b>Driver:</b> ${data.assigned_driver}</p>
-          <p><b>Pickup Route:</b> ${data.pickup_route.join(" → ")}</p>
-          <p><b>Trip Route:</b> ${data.trip_route.join(" → ")}</p>
-          <p><b>Total Distance:</b> ${data.distance}</p>
-          <p><b>Fare:</b> ₹${data.fare}</p>
-        `;
-      } catch (error) {
-        resultDiv.innerHTML = "<p style='color:red;'>❌ Error fetching ride data</p>";
-        console.error(error);
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
 
