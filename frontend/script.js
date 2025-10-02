@@ -1,28 +1,30 @@
-document.getElementById("rideForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+const API_BASE = "https://api-ridewithus-project.onrender.com";  // Your backend
 
-  const pickup = document.getElementById("pickup").value;
-  const destination = document.getElementById("destination").value;
+document.getElementById("rideForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  try {
-    const response = await fetch(
-      `https://ridewithus-project.onrender.com/ride?pickup=${encodeURIComponent(pickup)}&destination=${encodeURIComponent(destination)}`
-    );
+    const pickup = document.getElementById("pickup").value;
+    const destination = document.getElementById("destination").value;
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch ride data");
+    document.getElementById("result").innerText = "🚕 Finding a ride...";
+
+    try {
+        const response = await fetch(`${API_BASE}/simulate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pickup, destination })
+        });
+
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        document.getElementById("result").innerText = 
+            `✅ Ride confirmed!\nPickup: ${pickup}\nDestination: ${destination}\n\nResponse: ${JSON.stringify(data, null, 2)}`;
+    } catch (error) {
+        console.error("Error calling API:", error);
+        document.getElementById("result").innerText = "❌ Failed to connect to backend.";
     }
-
-    const data = await response.json();
-
-    document.getElementById("output").innerHTML = `
-      <p><strong>Driver:</strong> ${data.driver}</p>
-      <p><strong>ETA:</strong> ${data.eta} mins</p>
-      <p><strong>Pickup:</strong> ${pickup}</p>
-      <p><strong>Destination:</strong> ${destination}</p>
-    `;
-  } catch (error) {
-    document.getElementById("output").innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
-  }
 });
 
