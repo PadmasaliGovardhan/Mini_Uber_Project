@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from core.simulation import run_simulation
+from backend.core.simulation import run_simulation
+
 
 app = FastAPI(title="Mini Uber API")
 app.add_middleware(
