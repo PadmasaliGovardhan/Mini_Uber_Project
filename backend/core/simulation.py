@@ -1,5 +1,5 @@
-from core.city import create_sample_city
-from core.dispatcher import Dispatcher
+from .city import create_sample_city
+from .dispatcher import Dispatcher
 
 def run_simulation(pickup, destination):
     graph, drivers = create_sample_city()
