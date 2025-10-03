@@ -1,5 +1,5 @@
-from core.graph import Graph
-from core.driver import Driver
+from .graph import Graph
+from .driver import Driver
 
 def create_sample_city():
     graph = Graph()

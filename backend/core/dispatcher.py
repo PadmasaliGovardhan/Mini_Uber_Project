@@ -1,4 +1,4 @@
-from core.graph import find_shortest_path
+from .graph import find_shortest_path
 
 FARE_PER_UNIT_DISTANCE = 10  # adjustable
 
