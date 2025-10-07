@@ -1,27 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ride With Us 🚕</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚕 Ride With Us</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f7f8fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      width: 380px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      font-size: 15px;
+    }
+    input:focus {
+      border-color: #007bff;
+    }
+    button {
+      width: 95%;
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .result {
+      margin-top: 20px;
+      text-align: left;
+      font-size: 15px;
+      background: #f0f9f4;
+      border-radius: 10px;
+      padding: 15px;
+      border-left: 5px solid #28a745;
+    }
+    .emoji {
+      font-size: 22px;
+      margin-right: 6px;
+    }
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>🚕 Ride With Us</h1>
     <p>Enter your pickup and destination to book a ride.</p>
-
-    <form id="rideForm">
-      <input type="text" id="pickup" placeholder="Enter pickup location" required>
-      <input type="text" id="destination" placeholder="Enter destination" required>
-      <button type="submit">Request Ride</button>
-    </form>
+    <input type="text" id="pickup" placeholder="Pickup location (e.g., A)" />
+    <input type="text" id="destination" placeholder="Destination (e.g., E)" />
+    <button onclick="requestRide()">Request Ride</button>
 
     <div id="result"></div>
   </div>
 
-  <!-- Connect to backend -->
-  <script src="script.js"></script>
+  <script>
+    const API_BASE_URL = "https://api-ridewithus-project.onrender.com";
+
+    async function requestRide() {
+      const pickup = document.getElementById("pickup").value.trim();
+      const destination = document.getElementById("destination").value.trim();
+      const resultDiv = document.getElementById("result");
+
+      if (!pickup || !destination) {
+        resultDiv.innerHTML = "<p style='color:red;'>⚠️ Please fill in both fields.</p>";
+        return;
+      }
+
+      resultDiv.innerHTML = "⏳ Booking your ride...";
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/ride?pickup=${pickup}&destination=${destination}`);
+        const data = await response.json();
+
+        resultDiv.classList.add("fade-in");
+        resultDiv.innerHTML = `
+          <div class="result">
+            <p><strong>✅ Ride Confirmed!</strong></p>
+            <p>🚗 <strong>Driver:</strong> ${data.assigned_driver}</p>
+            <p>📍 <strong>Pickup:</strong> ${pickup}</p>
+            <p>🎯 <strong>Destination:</strong> ${destination}</p>
+            <p>🛣️ <strong>Route:</strong> ${data.trip_route.join(" → ")}</p>
+            <p>📏 <strong>Distance:</strong> ${data.distance} km</p>
+            <p>💰 <strong>Fare:</strong> ₹${data.fare}</p>
+          </div>
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = "<p style='color:red;'>❌ Failed to fetch ride details. Please try again.</p>";
+      }
+    }
+  </script>
 </body>
 </html>
 
