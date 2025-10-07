@@ -9,10 +9,7 @@ app = FastAPI(title="Mini Uber API")
 # CORS setup
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://ridewithus-92bdvu14d-padmasaligovardhans-projects.vercel.app",  
-        "http://localhost:5500"
-    ],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
