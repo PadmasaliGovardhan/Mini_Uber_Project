@@ -26,16 +26,17 @@
       color: #333;
       margin-bottom: 10px;
     }
-    input {
-      width: 90%;
+    select {
+      width: 95%;
       padding: 10px;
       margin: 8px 0;
       border-radius: 8px;
       border: 1px solid #ccc;
       outline: none;
       font-size: 15px;
+      background-color: white;
     }
-    input:focus {
+    select:focus {
       border-color: #007bff;
     }
     button {
@@ -78,11 +79,31 @@
 <body>
   <div class="container">
     <h1>🚕 Ride With Us</h1>
-    <p>Enter your pickup and destination to book a ride.</p>
-    <input type="text" id="pickup" placeholder="Pickup location (e.g., A)" />
-    <input type="text" id="destination" placeholder="Destination (e.g., E)" />
-    <button onclick="requestRide()">Request Ride</button>
+    <p>Select your pickup and destination cities.</p>
 
+    <select id="pickup">
+      <option value="">-- Select Pickup City --</option>
+      <option>Vijayawada</option>
+      <option>Mangalagiri</option>
+      <option>Vaddeswaram</option>
+      <option>Tadepalli</option>
+      <option>Machilipatnam</option>
+      <option>Chirala</option>
+      <option>Bapatla</option>
+    </select>
+
+    <select id="destination">
+      <option value="">-- Select Destination City --</option>
+      <option>Vijayawada</option>
+      <option>Mangalagiri</option>
+      <option>Vaddeswaram</option>
+      <option>Tadepalli</option>
+      <option>Machilipatnam</option>
+      <option>Chirala</option>
+      <option>Bapatla</option>
+    </select>
+
+    <button onclick="requestRide()">Request Ride</button>
     <div id="result"></div>
   </div>
 
@@ -95,7 +116,12 @@
       const resultDiv = document.getElementById("result");
 
       if (!pickup || !destination) {
-        resultDiv.innerHTML = "<p style='color:red;'>⚠️ Please fill in both fields.</p>";
+        resultDiv.innerHTML = "<p style='color:red;'>⚠️ Please select both cities.</p>";
+        return;
+      }
+
+      if (pickup === destination) {
+        resultDiv.innerHTML = "<p style='color:red;'>⚠️ Pickup and destination must be different.</p>";
         return;
       }
 
@@ -105,16 +131,22 @@
         const response = await fetch(`${API_BASE_URL}/ride?pickup=${pickup}&destination=${destination}`);
         const data = await response.json();
 
+        if (data.error) {
+          resultDiv.innerHTML = `<p style='color:red;'>❌ ${data.error}</p>`;
+          return;
+        }
+
         resultDiv.classList.add("fade-in");
         resultDiv.innerHTML = `
           <div class="result">
             <p><strong>✅ Ride Confirmed!</strong></p>
-            <p>🚗 <strong>Driver:</strong> ${data.assigned_driver}</p>
+            <p>🚗 <strong>Driver:</strong> ${data.driver_assigned?.name} (${data.driver_assigned?.vehicle}, ⭐ ${data.driver_assigned?.rating})</p>
             <p>📍 <strong>Pickup:</strong> ${pickup}</p>
             <p>🎯 <strong>Destination:</strong> ${destination}</p>
-            <p>🛣️ <strong>Route:</strong> ${data.trip_route.join(" → ")}</p>
-            <p>📏 <strong>Distance:</strong> ${data.distance} km</p>
-            <p>💰 <strong>Fare:</strong> ₹${data.fare}</p>
+            <p>📏 <strong>Distance:</strong> ${data.distance_km} km</p>
+            <p>⏱️ <strong>Time:</strong> ${data.estimated_time_hr} hr</p>
+            <p>💰 <strong>Fare:</strong> ₹${data.estimated_fare_inr}</p>
+            <p>🟢 <strong>Status:</strong> ${data.status}</p>
           </div>
         `;
       } catch (error) {
