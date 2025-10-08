@@ -1,12 +1,15 @@
 🚕 Ride With Us — A Mini Uber Simulation
 Welcome to Ride With Us, a sleek and exciting web-based simulation that brings the magic of ride-hailing platforms like Uber to life! This project showcases a real-time cab booking experience, complete with driver assignments, route planning, and fare calculations, all wrapped in a clean and intuitive UI. Whether you're a tech enthusiast or just curious about how ride-hailing apps work under the hood, this project is for you! 🎉
 
+--------------------------------------------------------------------------------------------------------------------
+
 🌟 Live Demo
 Hop in and take it for a spin!  
 
 Frontend (Client App): 🚗 [ridewithus.netlify.app](ridewithus.netlify.app)
 Backend API (FastAPI): ⚙️ [api-ridewithus-project.onrender.com](api-ridewithus-project.onrender.com)
 
+--------------------------------------------------------------------------------------------------------------------
 
 🚖 What’s This All About?
 “Ride With Us” is more than just a web app—it’s a smart transportation simulation that mimics the core mechanics of real-world ride-hailing systems. Here’s what makes it tick:
@@ -19,7 +22,7 @@ Dynamic Fare Calculation 💰Estimates your fare at ₹10/km based on the total 
 
 Slick Frontend ⚡A user-friendly interface lets you pick your starting point and destination, then instantly see your driver, route, fare, and estimated travel time.
 
-
+--------------------------------------------------------------------------------------------------------------------
 
 🛠️ Tech Stack
 Here’s the tech powering this ride-hailing adventure:
@@ -80,6 +83,7 @@ Books a simulated ride between two cities.Example:https://api-ridewithus-project
   "estimated_fare_inr": 800
 }
 
+--------------------------------------------------------------------------------------------------------------------
 
 🚀 How It Works (The Magic Behind the Scenes)
 
@@ -95,7 +99,7 @@ Fare & Time CalculationThe backend calculates the fare (₹10/km) and estimated 
 
 Display ResultsThe frontend presents your ride details in a clean, user-friendly card.
 
-
+--------------------------------------------------------------------------------------------------------------------
 
 🌍 Deployment
 
@@ -116,7 +120,7 @@ Frontend
 Netlify
 ridewithus.netlify.app
 
-
+--------------------------------------------------------------------------------------------------------------------
 
 🧑‍💻 Try It Locally
 Want to tinker with the code yourself? Here’s how to set it up:
@@ -136,24 +140,20 @@ uvicorn backend.api:app --reload
 
 Open the FrontendOpen index.html in your browser to start booking rides!
 
-
+--------------------------------------------------------------------------------------------------------------------
 
 🎨 Screenshots
 
-
-
-Home Page
-Ride Simulation
+<img width="1293" height="695" alt="image" src="https://github.com/user-attachments/assets/4ee3bd61-f855-453d-8c76-034497bcdf74" />
 
 
 
-
-
-
-
+--------------------------------------------------------------------------------------------------------------------
 
 👨‍💻 About the Author
-Padmasali Govardhan🎓 Electronics and Communication Engineering (ECE)💡 Passionate about Embedded Systems, Python, and AI-driven software development🌐 LinkedIn | GitHub
+Padmasali Govardhan🎓 Electronics and Communication Engineering (ECE) [LinkedIn](https://www.linkedin.com/in/govardhanpadmasali) 
+
+--------------------------------------------------------------------------------------------------------------------
 
 🌈 What’s Next?
 This project is just the beginning! Here are some exciting ideas for future enhancements:
@@ -163,6 +163,7 @@ This project is just the beginning! Here are some exciting ideas for future enha
 🤖 Live Driver Tracking: Simulate driver movement with WebSockets.  
 💬 Chatbot Assistant: Add a conversational bot for ride bookings.
 
+--------------------------------------------------------------------------------------------------------------------
 
 ⭐ Show Some Love
 If you enjoyed this project or learned something new, give it a ⭐ on GitHub and share it with your friends! Let’s build the future of transportation together. 🚗💨
